@@ -1,2 +1,3 @@
-# aeq_tech_test
-Technical test for Aequilibrium
+# Getting Started With Gulp
+
+Gulp example app for the tutorial
