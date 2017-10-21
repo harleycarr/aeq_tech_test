@@ -1,3 +1,5 @@
+battles = 0;
+
 function Transformer (name, stats) {
   this.name = name;
   this.stats = stats;
@@ -72,12 +74,9 @@ function teamBattle(teamA,teamB) {
     }
     return true;
   }
-  var battles = teamA.length < teamB.length ? autobots.length : decepticons.length;
-  console.log('battles', battles); // TODO - Remove me
+  battles = teamA.length < teamB.length ? autobots.length : decepticons.length;
 
   for(i=0; i < battles; i++){
-    botA = teamA[1];
-    botB = teamB[1];
     if(bosses(teamA[i], teamB[i])){
       console.log('destroy all robots'); // TODO - Remove me
       autobots.forEach(function(item){ item.active = false; });
@@ -86,30 +85,44 @@ function teamBattle(teamA,teamB) {
     }
     
     if(boss(teamA[i], teamB[i])){
-      console.log('boss'); // TODO - Remove me
       continue;
     }
 
     if(flee(teamA[i], teamB[i])){
-      console.log('flee'); // TODO - Remove me
       continue;
     }
     if(skill(teamA[i], teamB[i])){
-      console.log('skill'); // TODO - Remove me
       continue;
     }
     if(rating(teamA[i], teamB[i])){
-      console.log('rating'); // TODO - Remove me
       continue;
     }
     // tie
     teamA[i].active = false;
-    teamA]B[i].active = false;
+    teamB[i].active = false;
   }
 
 }
 
 teamBattle(autobots, decepticons);
+
+function reducer(sum, decepticon){
+  if(!decepticon.active) return sum + 1;
+  return sum;
+}
+inactiveAutobots = autobots.reduce(reducer, 0);
+inactiveDecepticons = decepticons.reduce(reducer, 0);
+
+if(inactiveAutobots === inactiveDecepticons){
+  // interestingly there is an edge case here not defined in the design doc. If both teams tie, but one
+  // team has more transformers left alive it is not covered whether the team with more left alive win in this case.
+  console.log('Tie!');
+} else if(inactiveAutobots < inactiveDecepticons){
+  console.log('Autobots Win!');
+} else {
+  console.log('Decepticon\'s win', );
+}
+console.log('Total battes: ', battles);
 
 
 /*
