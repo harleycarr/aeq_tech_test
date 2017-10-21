@@ -1,9 +1,6 @@
 var geography = [1,1,2,3,3,4,3,2,2,1,1,2,1,4];
 
 function placeCastles(geography){
-  var castles = 0;
-  var direction = 0;
-
   function checkDirection(index){
     var changeDirection = false;
 
@@ -24,9 +21,13 @@ function placeCastles(geography){
     return changeDirection;
   }
 
+  var castles = 0;
+  var direction = 0;
+
   // place initial castle
   if(geography.length) castles++;
 
+  // iterate geography
   geography.forEach(function(item, index){
     var changeDirection = checkDirection(index);
     if(changeDirection){
@@ -38,7 +39,7 @@ function placeCastles(geography){
       castles++;
     }
   });
-  console.log('castles: ', castles); // TODO - Remove me
+  console.log('castles: ', castles);
 }
 
 placeCastles(geography);
