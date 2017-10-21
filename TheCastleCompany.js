@@ -1,26 +1,17 @@
+var geography = [1,1,2,3,3,4,3,2,2,1,1,2,1,4];
+
 function placeCastles(geography){
-  var houses = 0;
+  var castles = 0;
   var direction = 0;
-  var init = true;
 
   function checkDirection(index){
     var changeDirection = false;
-    // place initial house
-    if(init){
-      init = false;
-      return true;
-    }
 
     // check direction
     if(geography[index] > geography[index-1] && direction <= 0){
       direction = 1;
     } else if(geography[index] < geography[index-1] && direction >= 0) {
       direction = -1;
-    }
-
-    // place final house
-    if(typeof geography[index+1] == 'undefined' && (direction !== 0)){
-      return true;
     }
 
     // check for directionChange
@@ -33,10 +24,21 @@ function placeCastles(geography){
     return changeDirection;
   }
 
+  // place initial castle
+  if(geography.length) castles++;
+
   geography.forEach(function(item, index){
     var changeDirection = checkDirection(index);
     if(changeDirection){
-      houses++
+      castles++
+    }
+
+    // place final castle
+    if(typeof geography[index+1] == 'undefined' && (direction !== 0)){
+      castles++;
     }
   });
+  console.log('castles: ', castles); // TODO - Remove me
 }
+
+placeCastles(geography);
