@@ -1,6 +1,8 @@
 var geography = [1,1,2,3,3,4,3,2,2,1,1,2,1,4];
 
 function placeCastles(geography){
+  // takes in array of integers, find true peaks and values. returns count.
+  
   function checkDirection(index){
     var changeDirection = false;
 
@@ -39,7 +41,7 @@ function placeCastles(geography){
       castles++;
     }
   });
-  console.log('castles: ', castles);
+  return castles;
 }
 
-placeCastles(geography);
+console.log('castles: ', placeCastles(geography));
