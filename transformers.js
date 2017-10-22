@@ -81,11 +81,9 @@ return transformers
   });
 }
 inactiveAutobots = autobots.reduce(reducer, 0);
-console.log('battles: ', battles);
 inactiveDecepticons = decepticons.reduce(reducer, 0);
 
-// interestingly there is an edge case here not defined in the design doc. If both teams tie, but one
-// team has more transformers left alive it is not covered whether the team with more left alive win in this case.
+console.log('battles: ', battles);
 if(inactiveAutobots === inactiveDecepticons){
   console.log('Tie!');
 } else if(inactiveAutobots < inactiveDecepticons){
