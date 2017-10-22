@@ -1,3 +1,6 @@
+// Guessing if you wanted to write this in Jedi you could use .map .filter and store the slope results in a trinary variable -1,0,1
+// the ending array would filter out duplicate slopes and 0's resulting in a final array that could be counted for the number of castles.
+
 function placeCastles(geography){
   var castles = 0;
   var direction = 0;
