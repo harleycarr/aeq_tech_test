@@ -1,14 +1,3 @@
-battles = 0;
-
-function Transformer (name, stats) {
-  // Probably should have included a .fight method, this class is pretty classless.
-  this.name = name;
-  this.stats = stats;
-  this.rating = stats.strength + stats.intelligence + stats.speed + stats.endurance + stats.firepower;
-  this.active = true;
-  this.isBoss = (name == 'Predaking' || name == 'Optimus Prime');
-}
-
 // transformer mocks
 var autobots = [
   new Transformer("Bumblebee", {"strength": 2, "intelligence": 8, "speed":4, "endurance": 7, "rank": 7, "courage": 10, "firepower": 1, "skill": 7}),
@@ -22,6 +11,17 @@ var decepticons = [
   new Transformer("Soundwave", {"strength": 8, "intelligence": 9, "speed":2, "endurance": 6, "rank": 8, "courage": 5, "firepower": 6, "skill": 10})
 ];
 
+battles = 0;
+
+function Transformer (name, stats) {
+  // Probably should have included a .fight method, this class is pretty classless.
+  this.name = name;
+  this.stats = stats;
+  this.rating = stats.strength + stats.intelligence + stats.speed + stats.endurance + stats.firepower;
+  this.active = true;
+  this.isBoss = (name == 'Predaking' || name == 'Optimus Prime');
+}
+
 // sort transformers
 function sortByRank(a, b){ return a.stats.rank < b.stats.rank;}
 autobots.sort(sortByRank);
@@ -32,7 +32,7 @@ function teamBattle(teamA,teamB) {
     return a.isBoss && b.isBoss;
   }
 
-  // checks who wins various checks
+  // Test who wins various checks
   function whoIsBetter(check, a, b){
     if(check(a,b)) {
       b.active = false;
@@ -44,7 +44,7 @@ function teamBattle(teamA,teamB) {
     return false;
   }
 
-  // Expressions for predicate checks on whoIsBetter
+  // Expressions for predicate checks on whoIsBetter, this pattern allows new checks to be easily added
   function boss(a,b)    { return a.isBoss };
   function courage(a,b) { return a.stats.courage - b.stats.courage >= 4 && a.stats.strength - b.stats.strength >= 3 };
   function skill(a,b)   { return a.stats.skill - b.stats.skill >= 3 };
@@ -82,15 +82,16 @@ return transformers
 }
 inactiveAutobots = autobots.reduce(reducer, 0);
 console.log('battles: ', battles);
-// interestingly there is an edge case here not defined in the design doc. If both teams tie, but one
 inactiveDecepticons = decepticons.reduce(reducer, 0);
 
+// interestingly there is an edge case here not defined in the design doc. If both teams tie, but one
+// team has more transformers left alive it is not covered whether the team with more left alive win in this case.
 if(inactiveAutobots === inactiveDecepticons){
-  // team has more transformers left alive it is not covered whether the team with more left alive win in this case.
   console.log('Tie!');
 } else if(inactiveAutobots < inactiveDecepticons){
   console.log('Autobots Win!');
   console.log('Decepticon Survivors: ', survivors(decepticons));
 } else {
-  console.log('Decepticon\'s win', );
+  console.log('Decepticon\'s win!');
+  console.log('Autobot Survivors: ', survivors(autobots));
 }
